@@ -1,0 +1,32 @@
+// Pacific timezone utility per 005 Operations/Directives/timezone_standard.md.
+// Brain renders dates from BRAIN.development-map.json timestamps + future
+// decision-ledger entries. Never use raw new Date() for date boundaries.
+
+const PACIFIC = 'America/Los_Angeles';
+
+export function getPacificDate(d: Date = new Date()): string {
+	return d.toLocaleDateString('en-CA', { timeZone: PACIFIC });
+}
+
+export function formatPacificDate(iso: string): string {
+	const [y, m, day] = iso.split('-').map(Number);
+	const d = new Date(Date.UTC(y, m - 1, day, 12, 0, 0));
+	return d.toLocaleDateString('en-US', {
+		timeZone: PACIFIC,
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	});
+}
+
+export function getPacificTimestamp(d: Date = new Date()): string {
+	return d.toLocaleString('en-US', {
+		timeZone: PACIFIC,
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+		hour: 'numeric',
+		minute: '2-digit',
+		timeZoneName: 'short'
+	});
+}

@@ -1,0 +1,429 @@
+{
+  "$schema": "https://quietlyworking.org/schemas/roadmap/qos_development_map.v1.json",
+  "meta": {
+    "schemaVersion": 1,
+    "mapVersion": "1.0.0",
+    "createdAt": "2026-04-26",
+    "updatedAt": "2026-04-26",
+    "lastReviewedAt": "2026-04-26",
+    "owners": ["TIG"],
+    "approvers": ["TIG"],
+    "status": "active",
+    "standard": "QOS",
+    "canonical_home": "https://brain.quietlyos.org",
+    "license": "[pending governance]",
+    "description": "Reference implementation of programmatic build-journey tracking for the QWF Advisor Brain under the Quietly Working Foundation's Quietly Operating Standard (QOS). Companion to QOS.development-map.json: where QOS clarifies WHO an organization is, the Brain map tracks the build of HOW it decides. Public at brain.quietlyos.org. Maintained by Quietly Working Foundation (501(c)(3)).",
+    "changelog": [
+      {
+        "date": "2026-04-26",
+        "change": "Initial BRAIN.development-map.json with 27 nodes across 6 phases. Schema reuse: this instance validates against qos_development_map.v1.schema.json (no Brain-specific fork in Phase 0). Phase 0 (Origin & Foundations) seeded with 6 shipped nodes pointing at real vault artifacts (master capture, OS+Brain companion framing, three-verdict reinforcement loop, role-based reviewer design call, share-not-sell voice discipline, site launch plan) plus 1 planned (the public-site Phase 0 launch). Phases 1-5 seeded with 21 planned nodes covering the schema layer (decisions.v1 + report format + append helper), runtime (5 nodes), reinforcement UI (4 nodes), calibration (4 nodes), and open standard (4 nodes).",
+        "reason": "Initial author. Brain dev map shipped same day as the OS+Brain split was locked in memory and the site launch plan was captured; the map is the third leg making the architecture machine-readable.",
+        "author": "TIG + Claude (Opus 4.7)"
+      }
+    ]
+  },
+  "identity": {
+    "shortName": "BRAIN",
+    "name": "QWF Advisor Brain"
+  },
+  "phases": [
+    {
+      "id": "p0",
+      "label": "Origin & Foundations",
+      "description": "What the Brain stands on before code. Master capture, OS+Brain companion framing locked in memory, three-verdict reinforcement loop, role-based reviewer design call, share-not-sell voice discipline, public-site launch plan. Phase 0 is the architectural ground truth.",
+      "goal": "Every load-bearing concept later phases consume has a vault artifact grounding it; each shipped node passes the drift validator against a real file.",
+      "order": 0
+    },
+    {
+      "id": "p1",
+      "label": "Schema Layer",
+      "description": "decisions.v1 schema, the report-format template, the append-decision helper script. The JSON contract for every Brain entry, plus the writer.",
+      "goal": "decisions.v1 schema shipped + validator + helper + report-format template; ready for the runtime to call.",
+      "order": 1
+    },
+    {
+      "id": "p2",
+      "label": "Runtime",
+      "description": "The headless Claude Agent SDK runner that reads a build plan, queries the corpus at decision time, logs WHY, pauses on novel decisions and escalates to HQ, stages commits without pushing. The Brain becomes load-bearing here.",
+      "goal": "First overnight run completes successfully, ledger entries persist, surprises queue cleanly, no autonomous commits land in main.",
+      "order": 2
+    },
+    {
+      "id": "p3",
+      "label": "Reinforcement UI",
+      "description": "The interface that closes the loop. Batch review surface, three-verdict mechanism (Approved / Approved+Reinforcement / Redirected+Reinforcement), trust-meter calculation, corpus update on redirect.",
+      "goal": "Every overnight run produces a report TIG (or designated reviewer) can verdict in 5 to 10 minutes; verdicts update the corpus deterministically.",
+      "order": 3
+    },
+    {
+      "id": "p4",
+      "label": "Calibration",
+      "description": "Per-category trust meters, stale-corpus detection, random-sample spot-check on high-trust decisions, prompt-injection integrity protections.",
+      "goal": "Trust behavior matches reality; no silent drift; no poisoned corpus; integrity checks routine.",
+      "order": 4
+    },
+    {
+      "id": "p5",
+      "label": "Open Standard",
+      "description": "The Brain pattern published as a public QOS reference implementation. Documentation, governance license, adopt-page with fork instructions, first supporter adopter.",
+      "goal": "Another organization can fork the Brain pattern using only what is published at brain.quietlyos.org and the QOS schema gallery.",
+      "order": 5
+    }
+  ],
+  "nodes": [
+    {
+      "id": "p0.brain.master-capture",
+      "phase": "p0",
+      "label": "Master Architectural Capture",
+      "status": "shipped",
+      "description": "Captures the full Brain architecture: Strategy C autonomous-overnight orchestrator, three-verdict reinforcement loop, decision-ledger schema sketch, anti-patterns, success metrics, integration points with existing systems, phased build plan.",
+      "why": "Architecture must survive context compaction. The capture is the canonical source of truth that future agents (and supporters) read first.",
+      "timestamps": {
+        "shipped_at": "2026-04-25T16:00:00-07:00"
+      },
+      "files": [
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Advisor-Brain-Capture.md",
+          "kind": "capture",
+          "description": "Full architecture document including OS+Brain companion framing, three-verdict reinforcement loop, anti-patterns, success metrics."
+        }
+      ],
+      "tags": ["foundational", "load-bearing", "anti-compaction"]
+    },
+    {
+      "id": "p0.brain.os-companion",
+      "phase": "p0",
+      "label": "OS + Brain Companion Framing",
+      "status": "shipped",
+      "description": "Locks the Brain as the operational HOW-layer that complements QOS. QOS clarifies WHO an organization is (schemas); Brain clarifies HOW it decides (choices + WHY). Wisdom Library is a separate artifact handling what the org KNOWS, not part of the Brain's territory.",
+      "why": "Without an explicit companion framing, the Brain risked being mis-shelved as the QOS Wisdom Layer. That conflation flattened two distinct artifacts and weakened both. Locking the framing in memory protects against future drift.",
+      "timestamps": {
+        "shipped_at": "2026-04-26T22:30:00-07:00"
+      },
+      "files": [
+        {
+          "path": "memory/project_qwf_advisor_brain.md",
+          "kind": "memory",
+          "description": "Master memory file: description, the three-things-at-once frame, OS+Brain split, public home brain.quietlyos.org."
+        }
+      ],
+      "tags": ["foundational", "framing", "anti-drift"]
+    },
+    {
+      "id": "p0.brain.three-verdict-loop",
+      "phase": "p0",
+      "label": "Three-Verdict Reinforcement Loop",
+      "status": "shipped",
+      "description": "Locks the three verdict states (Approved / Approved+Reinforcement / Redirected+Reinforcement) and their effects on corpus and trust meter. Names the redirect itself as a reinforcement event when paired with WHY.",
+      "why": "Without locked verdict semantics, the corpus would drift on what counts as 'approval' and what counts as 'teaching.' Naming the three states explicitly makes the loop's compounding mechanic legible to any future reviewer or adopter.",
+      "timestamps": {
+        "shipped_at": "2026-04-26T22:35:00-07:00"
+      },
+      "files": [
+        {
+          "path": "memory/project_qwf_advisor_brain.md",
+          "kind": "memory",
+          "description": "Section 'Three-Verdict Reinforcement Loop' with the full table of corpus + trust meter effects."
+        }
+      ],
+      "tags": ["foundational", "load-bearing", "reinforcement-loop"]
+    },
+    {
+      "id": "p0.brain.role-based-reviewer",
+      "phase": "p0",
+      "label": "Role-Based Reviewer Design",
+      "status": "shipped",
+      "description": "Forward-looking design call: decisions.v1 schema must support multiple reviewers and role-based routing from day one. A future supporter adopting the Brain might have a small board, not a single founder. Schema needs reviewer (role + identity) and verdict.signed_by from the start.",
+      "why": "Cheap to design in now, painful to retrofit. TIG named 'decision making member or team' when describing who reviews reports... that phrase is load-bearing for adopter supporters with multi-person decision rights.",
+      "timestamps": {
+        "shipped_at": "2026-04-26T22:40:00-07:00"
+      },
+      "files": [
+        {
+          "path": "memory/project_qwf_advisor_brain.md",
+          "kind": "memory",
+          "description": "Section 'Role-Based Reviewer Support' captures the forward-looking design constraint."
+        }
+      ],
+      "tags": ["forward-looking", "open-standard-prep"]
+    },
+    {
+      "id": "p0.brain.share-not-sell",
+      "phase": "p0",
+      "label": "Share-Not-Sell Voice Discipline",
+      "status": "shipped",
+      "description": "Named corpus preference enforcing no-competitive-framing on all public-facing QWF content. Frame work as 'what fits our weaknesses and strengths,' never 'better than what others do.' Underneath: invitation, not argument. Reader's first job is Know Thyself.",
+      "why": "Voice discipline gets harder to retrofit once content ships at scale. Locking the rule before brain.quietlyos.org publishes prevents the agentic team from drifting into adversarial framing that violates the Quietly Working brand anchor.",
+      "timestamps": {
+        "shipped_at": "2026-04-26T22:45:00-07:00"
+      },
+      "files": [
+        {
+          "path": "memory/feedback_share_not_sell.md",
+          "kind": "memory",
+          "description": "Named corpus preference with five-point WHY, application notes, severity, scope, and the live-redirect demonstration that reinforced it."
+        }
+      ],
+      "tags": ["voice-discipline", "public-content", "corpus-entry"]
+    },
+    {
+      "id": "p0.brain.site-launch-plan",
+      "phase": "p0",
+      "label": "brain.quietlyos.org Launch Plan",
+      "status": "shipped",
+      "description": "Phased launch plan for the public Brain home. Separate-repo decision (QuietlyWorking/quietly-brain), CF Pages + SvelteKit, subdomain CNAME, six Phase 0 sections, seven new components, day-one node tree, three-sweep anonymity discipline, mission-thesis hero copy locked.",
+      "why": "Without a documented launch plan, the fresh-session agent that builds Phase 0 would have to extrapolate scope, voice, and architecture from scratch. The plan turns build-in-public from intent into executable sequence.",
+      "timestamps": {
+        "shipped_at": "2026-04-26T22:50:00-07:00"
+      },
+      "files": [
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Brain-Site-Launch-Plan.md",
+          "kind": "spec",
+          "description": "Launch plan for brain.quietlyos.org including phase rollout, infrastructure spec, components, anonymity, day-one node tree, hero copy, next-actions."
+        }
+      ],
+      "tags": ["spec", "launch-plan", "build-in-public"],
+      "parallel_safe_with": ["p0.brain.share-not-sell", "p0.brain.three-verdict-loop"]
+    },
+    {
+      "id": "p0.brain.site-phase-0",
+      "phase": "p0",
+      "label": "brain.quietlyos.org Phase 0 Public Launch",
+      "status": "planned",
+      "description": "Build and ship the public Phase 0 surface of brain.quietlyos.org per the launch plan. Six sections (hero, how-it-works, architecture, build map, what-goes-here-next, open standard), seven components, supporter sweep + em-dash scrub at build, CF Pages deploy, DNS CNAME, SSL, cross-link with quietlyos.org footer.",
+      "why": "Build-in-public requires a public surface. The launch plan describes the destination; this node ships the actual site. Without this node, the Brain stays internal and the transparency story misses its central artifact.",
+      "depends_on": ["p0.brain.site-launch-plan"],
+      "tags": ["public-surface", "build-in-public", "fresh-agent-task"]
+    },
+    {
+      "id": "p1.brain.decisions-v1",
+      "phase": "p1",
+      "label": "decisions.v1 Schema",
+      "status": "planned",
+      "description": "JSON Schema (Draft 2020-12) defining the decision-ledger entry shape: id, context, call, WHY-at-time-of-decision (required), expected outcome, trust weight (HARD-RULE / SOFT-PREFERENCE / NOVEL), verdict (pending / approved / approved-with-reinforcement / redirected), feedback (TIG's WHY on redirect), trace (commits, files, HQ items, dev-map nodes), reviewer (role + identity), verdict.signed_by.",
+      "why": "Without a schema, ledger entries drift in shape; future analysis and reinforcement-loop tooling break. Schema also enables open-standard publication: a supporter can adopt the Brain pattern using the same JSON contract.",
+      "notes": "Cross-instance dependency on QOS p1.content.v1 (already shipped 2026-04-26). Brain decisions reason in the language content.v1 defines.",
+      "tags": ["schema", "open-standard", "load-bearing"]
+    },
+    {
+      "id": "p1.brain.report-format",
+      "phase": "p1",
+      "label": "Report Format Template",
+      "status": "planned",
+      "description": "Locked template for end-of-session Brain reports. Required: Non-technical description first per call, top-N call detail, action table at end, open-questions section, cross-build observations. Format requirement no-silent-approval-during-formation enforced until trust meters stabilize.",
+      "why": "The report is the human interface for the reinforcement loop. Format quality determines whether feedback compounds the corpus or fatigues the reviewer. Locking the template before Brain MVP runs prevents drift during the corpus-formation period.",
+      "depends_on": ["p1.brain.decisions-v1"],
+      "tags": ["template", "human-interface"]
+    },
+    {
+      "id": "p1.brain.append-script",
+      "phase": "p1",
+      "label": "append_decision.py Helper",
+      "status": "planned",
+      "description": "Python helper script that appends a decisions.v1 entry to the ledger with WHY, trust weight, and trace. Validates against decisions.v1 schema before write. Returns structured result.",
+      "why": "Deterministic ledger writes prevent corpus corruption. Helper script is the canonical interface; agents call it instead of hand-editing JSON files.",
+      "depends_on": ["p1.brain.decisions-v1"],
+      "tags": ["script", "deterministic-tool"]
+    },
+    {
+      "id": "p2.brain.headless-runner",
+      "phase": "p2",
+      "label": "Headless Claude Agent SDK Runner",
+      "status": "planned",
+      "description": "Long-running Claude Agent SDK process that reads a build plan, executes checkpoints, calls append_decision.py at every decision point, surfaces escalations to HQ, stages commits without pushing.",
+      "why": "Overnight runs require a runtime that survives without a chat session attached. The SDK is the substrate; this node makes it Brain-aware.",
+      "depends_on": ["p1.brain.decisions-v1", "p1.brain.append-script"],
+      "tags": ["runtime", "load-bearing"]
+    },
+    {
+      "id": "p2.brain.corpus-query",
+      "phase": "p2",
+      "label": "Corpus Query at Decision Time",
+      "status": "planned",
+      "description": "Decision-time lookup against memory/feedback_*.md files plus prior decision-ledger entries. Returns relevant SOFT PREFERENCES and precedent decisions for the Brain to reason against.",
+      "why": "Without precedent lookup, the Brain re-decides every call from scratch. With it, the Brain operates on accumulated judgment, which is the entire point of the corpus.",
+      "depends_on": ["p2.brain.headless-runner"],
+      "tags": ["runtime", "corpus"]
+    },
+    {
+      "id": "p2.brain.surprise-pause",
+      "phase": "p2",
+      "label": "Surprise Pause + HQ Escalation",
+      "status": "planned",
+      "description": "When the Brain hits a NOVEL decision (not in corpus, not a HARD RULE), it pauses the run, files an HQ item with full context, and waits for TIG's verdict. No autonomous resolution of novel calls.",
+      "why": "Cold-start treatment for novel decisions is the safety net. It prevents the Brain from inventing precedent and lets the corpus grow only via TIG-blessed entries.",
+      "depends_on": ["p2.brain.headless-runner"],
+      "tags": ["safety", "human-in-the-loop"]
+    },
+    {
+      "id": "p2.brain.commit-staging",
+      "phase": "p2",
+      "label": "Commit Staging (No Push)",
+      "status": "planned",
+      "description": "Brain stages commits but never pushes to main. TIG green-lights pushes during morning review. The zero-autonomous-commits gate from CLAUDE.md applies absolutely.",
+      "why": "Reversibility is the safety property. A staged commit can be amended, squashed, or discarded; a pushed commit is public history. Gate stays even when trust meter is high.",
+      "depends_on": ["p2.brain.headless-runner"],
+      "tags": ["safety", "irreversibility-discipline"]
+    },
+    {
+      "id": "p2.brain.first-overnight-run",
+      "phase": "p2",
+      "label": "First Successful Overnight Run",
+      "status": "planned",
+      "description": "Inaugural autonomous overnight run executes a real build plan (likely a future schema checkpoint), produces ledger entries, queues HQ escalations as needed, stages commits. Morning review verifies the run via the report format.",
+      "why": "First-light is the proof of MVP. Without a successful overnight, every later phase is theoretical. With it, the Brain becomes load-bearing.",
+      "depends_on": ["p2.brain.corpus-query", "p2.brain.surprise-pause", "p2.brain.commit-staging"],
+      "tags": ["milestone", "proof-of-life"]
+    },
+    {
+      "id": "p3.brain.batch-review",
+      "phase": "p3",
+      "label": "Batch Review Surface (HQ Filter View)",
+      "status": "planned",
+      "description": "HQ Command Center filter view that surfaces every Brain ledger entry awaiting verdict, grouped by session, with the report format pre-rendered. TIG (or designated reviewer) verdicts in 5 to 10 minutes.",
+      "why": "Reviewer fatigue kills the reinforcement loop. A purpose-built batch review surface keeps verdict cost low and keeps the corpus growing.",
+      "depends_on": ["p2.brain.first-overnight-run"],
+      "tags": ["ui", "human-interface"]
+    },
+    {
+      "id": "p3.brain.verdict-mechanism",
+      "phase": "p3",
+      "label": "Three-Verdict Mechanism",
+      "status": "planned",
+      "description": "Reviewer interface that captures Approved / Approved+Reinforcement (with WHY) / Redirected+Reinforcement (with WHY). TIG-only signature. Append-only ledger; no edits to past verdicts.",
+      "why": "The mechanism enforces the locked three-verdict semantics from p0.brain.three-verdict-loop. Without it, reinforcement happens informally and inconsistently.",
+      "depends_on": ["p3.brain.batch-review"],
+      "tags": ["ui", "reinforcement-loop"]
+    },
+    {
+      "id": "p3.brain.trust-meter-calc",
+      "phase": "p3",
+      "label": "Trust Meter Calculation",
+      "status": "planned",
+      "description": "Per-decision-category agreement-rate over the last 20 decisions. High (90%+) auto-handles, medium (70-89%) flags for spot-check, low (<70%) re-escalates. Subcategorization prevents over-generalization.",
+      "why": "The trust meter is the calibration signal. Without it, the Brain cannot distinguish stable categories from drift-prone ones, and TIG cannot see drift before it becomes habit.",
+      "depends_on": ["p3.brain.verdict-mechanism"],
+      "tags": ["calibration", "metrics"]
+    },
+    {
+      "id": "p3.brain.corpus-update-on-redirect",
+      "phase": "p3",
+      "label": "Corpus Update on Redirect",
+      "status": "planned",
+      "description": "When a verdict is Redirected+Reinforcement, the writer updates the relevant memory file with TIG's WHY. Append for new categories, rewrite for existing rules. Decrement trust meter.",
+      "why": "The redirect-with-WHY is where the corpus grows. Without an automated writer, redirects stay in chat and never compound. With it, every redirect makes the next session smarter.",
+      "depends_on": ["p3.brain.verdict-mechanism"],
+      "tags": ["corpus", "writer"]
+    },
+    {
+      "id": "p4.brain.per-category-trust",
+      "phase": "p4",
+      "label": "Per-Category Trust Subdivision",
+      "status": "planned",
+      "description": "Subdivide trust meter into specific decision shapes (e.g., 'cascade naming for forbidden patterns' vs 'cascade naming for vocabulary alternatives') so high agreement in one shape does not inflate trust in adjacent shapes.",
+      "why": "Trust inflation is a documented anti-pattern. Subcategorization is the structural prevention.",
+      "depends_on": ["p3.brain.trust-meter-calc"],
+      "tags": ["calibration", "anti-pattern-mitigation"]
+    },
+    {
+      "id": "p4.brain.stale-corpus-detection",
+      "phase": "p4",
+      "label": "Stale Corpus Detection (90-Day Rule)",
+      "status": "planned",
+      "description": "Every memory file gets a last-reinforced timestamp. Decisions in categories not reinforced for 90 days re-escalate to TIG. Stale rules expire safely instead of compounding silently.",
+      "why": "Corpus drift (TIG's preferences evolve away from a stored rule) is invisible without a re-escalation trigger. The 90-day rule forces refresh.",
+      "depends_on": ["p3.brain.corpus-update-on-redirect"],
+      "tags": ["calibration", "anti-pattern-mitigation"]
+    },
+    {
+      "id": "p4.brain.spot-check-high-trust",
+      "phase": "p4",
+      "label": "Random-Sample Spot-Check on High-Trust Decisions",
+      "status": "planned",
+      "description": "Every batch report random-samples a few HIGH-TRUST decisions for explicit verdict ('the Brain says this was 95% confidence... do you actually agree?'). Track over-approval as its own metric.",
+      "why": "Silent disagreement (TIG approves something he secretly disagreed with) is the hardest anti-pattern to detect. Random spot-checks surface it.",
+      "depends_on": ["p3.brain.verdict-mechanism"],
+      "tags": ["calibration", "anti-pattern-mitigation"]
+    },
+    {
+      "id": "p4.brain.prompt-injection-integrity",
+      "phase": "p4",
+      "label": "Prompt Injection Integrity Checks",
+      "status": "planned",
+      "description": "Signed ledger entries (agent-id + commit hash). Append-only ledger. TIG-only verdict signatures. Random-sample integrity checks against known-clean baseline.",
+      "why": "A poisoned ledger entry could fake precedent and shape future decisions. Integrity checks make tampering detectable.",
+      "depends_on": ["p1.brain.decisions-v1"],
+      "tags": ["security", "integrity"]
+    },
+    {
+      "id": "p5.brain.public-pattern-doc",
+      "phase": "p5",
+      "label": "Brain Pattern Documentation",
+      "status": "planned",
+      "description": "Public documentation of the Brain pattern as a QOS reference implementation. Lives at brain.quietlyos.org; covers schema, runtime, reinforcement loop, anti-patterns, success metrics, fork-it instructions.",
+      "why": "Open-standard publication is the multiplier. Documenting the pattern lets supporter organizations adopt it without QWF re-explaining for every adopter.",
+      "depends_on": ["p2.brain.first-overnight-run", "p3.brain.corpus-update-on-redirect"],
+      "tags": ["open-standard", "publication"]
+    },
+    {
+      "id": "p5.brain.governance-license",
+      "phase": "p5",
+      "label": "Governance License",
+      "status": "planned",
+      "description": "Open-source license under which the Brain pattern (schema + reference implementation) is published. Aligns with the broader QOS license decision (currently '[pending governance]').",
+      "why": "Without a license, supporter forks live in legal ambiguity. The license sets the terms under which adoption is welcomed.",
+      "depends_on": ["p5.brain.public-pattern-doc"],
+      "tags": ["governance", "legal"]
+    },
+    {
+      "id": "p5.brain.adopt-page",
+      "phase": "p5",
+      "label": "Adopt-The-Brain Page",
+      "status": "planned",
+      "description": "Public page on brain.quietlyos.org with concrete fork-it instructions: clone the schema, scaffold a corpus, plug into your decision rights structure, run your first batch review. Includes worked examples from QWF (anonymized) and any consenting supporter adopters.",
+      "why": "Documentation alone does not lower adoption cost; a fork-it walkthrough does. The adopt page is the difference between 'read about this' and 'try this tonight.'",
+      "depends_on": ["p5.brain.public-pattern-doc", "p5.brain.governance-license"],
+      "tags": ["open-standard", "adoption"]
+    },
+    {
+      "id": "p5.brain.first-supporter-fork",
+      "phase": "p5",
+      "label": "First Supporter Fork",
+      "status": "planned",
+      "description": "First non-QWF organization adopts the Brain pattern using the published schema + adopt page. Their corpus stays private; HARD RULES inherited from QOS public standard; SOFT PREFERENCES are theirs.",
+      "why": "Adoption is the ultimate proof of standard. A supporter running their own Brain validates that the pattern transfers, not just the implementation.",
+      "depends_on": ["p5.brain.adopt-page"],
+      "tags": ["open-standard", "adoption", "milestone"]
+    }
+  ],
+  "milestones": [
+    {
+      "id": "A",
+      "label": "Schema Layer Complete",
+      "description": "decisions.v1 schema, report-format template, and append helper all shipped. The Brain has a JSON contract and a writer.",
+      "computed_from": {
+        "phase_ids": ["p1"],
+        "required_statuses": ["shipped"]
+      }
+    },
+    {
+      "id": "B",
+      "label": "Runtime + Reinforcement Operational",
+      "description": "First overnight run completed and verdicted via the three-verdict mechanism. The Brain is load-bearing; the corpus compounds across sessions.",
+      "computed_from": {
+        "phase_ids": ["p1", "p2", "p3"],
+        "required_statuses": ["shipped"]
+      }
+    },
+    {
+      "id": "C",
+      "label": "Brain v1 Complete",
+      "description": "Every p1 through p5 node shipped. Calibration is routine. Open standard published. First supporter has forked. The Brain pattern is a transferable QOS reference implementation.",
+      "computed_from": {
+        "phase_ids": ["p1", "p2", "p3", "p4", "p5"],
+        "required_statuses": ["shipped"]
+      }
+    }
+  ]
+}
