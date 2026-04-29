@@ -4,8 +4,8 @@
     "schemaVersion": 1,
     "mapVersion": "1.0.0",
     "createdAt": "2026-04-26",
-    "updatedAt": "2026-04-27",
-    "lastReviewedAt": "2026-04-27",
+    "updatedAt": "2026-04-29",
+    "lastReviewedAt": "2026-04-29",
     "owners": [
       "TIG"
     ],
@@ -29,6 +29,12 @@
         "change": "p0.brain.site-phase-0 toggled planned -> shipped. brain.quietlyos.org live with valid SSL (Google Trust Services, valid through 2026-07-26); www and .com variants 301 to canonical; build map renders 6 of 27 nodes shipped (22%); em-dash scrub plus supporter-anonymity sweep plus youth-protection sweep framework plus TIG-personal toggle all clean on live HTML. CF Pages deploy via GitHub Actions wrangler-action (45s build). Hand-edit toggle (Python toggle script not yet generalized for Brain JSON; commit history preserves the transition).",
         "reason": "E2E verification complete; the Brain has its public surface. Phase 0 closes; Phase 1 (decisions.v1 schema + report-format + append-script) is the natural next sequence.",
         "author": "Brain Phase 0 Build Session (Claude Opus 4.7) plus TIG verdicts"
+      },
+      {
+        "date": "2026-04-29",
+        "change": "Phase 1 schema layer shipped: p1.brain.decisions-v1, p1.brain.report-format, p1.brain.append-script all toggled planned -> shipped. decisions.v1 schema (22 $defs, QOS meta, em-dash-free) plus directive plus QWF root ledger plus examples file plus validator plus resolver plus append_decision.py canonical writer plus C4 E2E smoke test verified end-to-end against live hq_brain_verdicts table and #advisor-brain Discord channel. Build map count: 7 of 27 -> 10 of 27 (37%).",
+        "reason": "Phase 1 of the QWF Advisor Brain build plan complete. The schema layer unblocks Phase 2 (the headless runtime that consumes the schema).",
+        "author": "Phase 1 decisions.v1 Build Session (Claude Opus 4.7) plus TIG verdicts"
       }
     ]
   },
@@ -262,7 +268,7 @@
       "id": "p1.brain.decisions-v1",
       "phase": "p1",
       "label": "decisions.v1 Schema",
-      "status": "planned",
+      "status": "shipped",
       "description": "JSON Schema (Draft 2020-12) defining the decision-ledger entry shape: id, context, call, WHY-at-time-of-decision (required), expected outcome, trust weight (HARD-RULE / SOFT-PREFERENCE / NOVEL), verdict (pending / approved / approved-with-reinforcement / redirected), feedback (TIG's WHY on redirect), trace (commits, files, HQ items, dev-map nodes), reviewer (role + identity), verdict.signed_by.",
       "why": "Without a schema, ledger entries drift in shape; future analysis and reinforcement-loop tooling break. Schema also enables open-standard publication: a supporter can adopt the Brain pattern using the same JSON contract.",
       "notes": "Cross-instance dependency on QOS p1.content.v1 (already shipped 2026-04-26). Brain decisions reason in the language content.v1 defines.",
@@ -270,13 +276,38 @@
         "schema",
         "open-standard",
         "load-bearing"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-29T03:00:00-07:00"
+      },
+      "files": [
+        {
+          "path": "005 Operations/Standards/decisions/decisions.v1.schema.json",
+          "kind": "schema",
+          "description": "JSON Schema Draft 2020-12; 22 $defs; QOS reference-implementation meta block; conditional root validation; per-entry conditional rules for kind / verdict-state combinations; structured Reviewer with role + identity; CrossSchemaRef pattern reused from content.v1; em-dash-free schema prose."
+        },
+        {
+          "path": "005 Operations/Directives/decisions_json_standard.md",
+          "kind": "directive",
+          "description": "SOP for the schema. Goal / Trigger / Inputs / Tools / Steps / Outputs / Edge Cases / Implementation Status / Changelog. Documents schema-to-table mapping, WHY-at-time-of-decision discipline, append-only invariant, multi-org cascade for supporter forks."
+        },
+        {
+          "path": "005 Operations/Decisions/QWF.decisions.json",
+          "kind": "instance",
+          "description": "QWF foundation root ledger. entries[] empty (Phase 2 runtime populates); 8 trust-meter categories seeded; reviewerRoles[] founder-only; meta.purpose=ledger."
+        },
+        {
+          "path": "005 Operations/Decisions/QWF.decisions.examples.json",
+          "kind": "instance",
+          "description": "Doc-only sample entries (meta.purpose=examples). Three entries demonstrating: (1) NOVEL plus approved-with-reinforcement plus full trace; (2) SOFT-PREFERENCE plus silent approval; (3) hypothetical kind=promotion plus HARD-RULE."
+        }
       ]
     },
     {
       "id": "p1.brain.report-format",
       "phase": "p1",
       "label": "Report Format Template",
-      "status": "planned",
+      "status": "shipped",
       "description": "Locked template for end-of-session Brain reports. Required: Non-technical description first per call, top-N call detail, action table at end, open-questions section, cross-build observations. Format requirement no-silent-approval-during-formation enforced until trust meters stabilize.",
       "why": "The report is the human interface for the reinforcement loop. Format quality determines whether feedback compounds the corpus or fatigues the reviewer. Locking the template before Brain MVP runs prevents drift during the corpus-formation period.",
       "depends_on": [
@@ -285,13 +316,33 @@
       "tags": [
         "template",
         "human-interface"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-29T03:00:00-07:00"
+      },
+      "files": [
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Advisor-Brain-Capture.md",
+          "kind": "spec",
+          "description": "Master capture \u00a7The Report Format documents the locked template: Non-technical description first per call, Items Awaiting Explicit Verdict section, top-N call detail with WHY-at-decision, alternatives, suggested verdict."
+        },
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Decision-Ledger/Brain-Site-Phase-0-Build-Report-2026-04-27.md",
+          "kind": "capture",
+          "description": "Phase 0 fresh-session execution build report. First demonstration of the locked template; carried 6 TOP CALLS, 3 self-catches, action table, open questions."
+        },
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Decision-Ledger/Phase-1-Build-Report-2026-04-29.md",
+          "kind": "capture",
+          "description": "Phase 1 build report shipped this session. Second demonstration of the locked template; carries TOP CALLS per checkpoint, self-catches surfaced during the run, action table, open questions awaiting verdict."
+        }
       ]
     },
     {
       "id": "p1.brain.append-script",
       "phase": "p1",
       "label": "append_decision.py Helper",
-      "status": "planned",
+      "status": "shipped",
       "description": "Python helper script that appends a decisions.v1 entry to the ledger with WHY, trust weight, and trace. Validates against decisions.v1 schema before write. Returns structured result.",
       "why": "Deterministic ledger writes prevent corpus corruption. Helper script is the canonical interface; agents call it instead of hand-editing JSON files.",
       "depends_on": [
@@ -300,6 +351,31 @@
       "tags": [
         "script",
         "deterministic-tool"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-29T03:00:00-07:00"
+      },
+      "files": [
+        {
+          "path": "005 Operations/Execution/append_decision.py",
+          "kind": "script",
+          "description": "Canonical writer. Validates proposed entry against decisions.v1 schema; writes HQ first via existing write_brain_verdict.py; links HQ row id back into entry via trace.hqItems cross-reference; writes canonical JSON; rolls back HQ row if JSON write fails. --dry-run + --skip-hq flags for diagnostics."
+        },
+        {
+          "path": "005 Operations/Execution/validate_decisions.py",
+          "kind": "script",
+          "description": "Validator. Structural (jsonschema) + cross-reference integrity + em-dash leak detector + required-WHY check + filename-vs-purpose consistency. Examples files surface cross-ref misses as warnings; ledger files block."
+        },
+        {
+          "path": "005 Operations/Execution/resolve_decisions.py",
+          "kind": "script",
+          "description": "Resolver. Cascade child over parent per the locked policy (entries locked, categories/reviewerRoles/agentContext additive-or-override). Cross-schema reference annotation in _resolution.lineage. --check-cross-refs standalone mode."
+        },
+        {
+          "path": "005 Operations/Execution/test_decisions_c4_e2e.py",
+          "kind": "script",
+          "description": "C4 E2E smoke test. Exercises full pipeline against live infrastructure: append plus PostgREST read-back plus Discord webhook (?wait=true for message-id verification) plus canonical round-trip plus cleanup. All 5 steps verified far-end delivery per feedback_e2e_means_inbox_not_db.md."
+        }
       ]
     },
     {
