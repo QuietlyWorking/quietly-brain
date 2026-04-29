@@ -4,8 +4,8 @@
     "schemaVersion": 1,
     "mapVersion": "1.0.0",
     "createdAt": "2026-04-26",
-    "updatedAt": "2026-04-29",
-    "lastReviewedAt": "2026-04-29",
+    "updatedAt": "2026-04-28",
+    "lastReviewedAt": "2026-04-28",
     "owners": [
       "TIG"
     ],
@@ -35,6 +35,12 @@
         "change": "Phase 1 schema layer shipped: p1.brain.decisions-v1, p1.brain.report-format, p1.brain.append-script all toggled planned -> shipped. decisions.v1 schema (22 $defs, QOS meta, em-dash-free) plus directive plus QWF root ledger plus examples file plus validator plus resolver plus append_decision.py canonical writer plus C4 E2E smoke test verified end-to-end against live hq_brain_verdicts table and #advisor-brain Discord channel. Build map count: 7 of 27 -> 10 of 27 (37%).",
         "reason": "Phase 1 of the QWF Advisor Brain build plan complete. The schema layer unblocks Phase 2 (the headless runtime that consumes the schema).",
         "author": "Phase 1 decisions.v1 Build Session (Claude Opus 4.7) plus TIG verdicts"
+      },
+      {
+        "date": "2026-04-28",
+        "change": "Phase 3 Brain MVP runtime shipped: p2.brain.headless-runner, p2.brain.corpus-query, p2.brain.surprise-pause, p2.brain.commit-staging all toggled planned -> shipped. Runner.py + corpus_query.py + brain_runtime_config.json + run_brain_overnight.sh built and verified via C4 rehearsal: 27-turn autonomous build executed against synthetic plan, $2.61 inside $8 cap, all wired tool paths fired, trust-weight dual-write split honored (NOVEL via append_decision, SOFT-PREFERENCE via write_brain_verdict), em-dash discipline held. Four self-catches surfaced honestly: query() vs ClaudeSDKClient for SDK MCP servers, max_thinking_tokens incompatible with Opus 4.7, agent build-report false-positive on self-catch (system prompt fix), top_calls schema mismatch in checkpoint formatter (formatter fix). Build map count: 10 of 27 -> 14 of 27 (52%).",
+        "reason": "Phase 3 of the QWF Advisor Brain build plan complete. The runtime exists, exercises every wired tool, respects all C1 verdicts, and passes its own self-catch discipline. Phase 4 (mobile UX polish, trust meter sub-views) and Phase 5 (open standard publication) are the natural next sequences.",
+        "author": "Phase 3 Brain MVP Runtime Build Session (Claude Opus 4.7) plus TIG verdicts"
       }
     ]
   },
@@ -382,7 +388,7 @@
       "id": "p2.brain.headless-runner",
       "phase": "p2",
       "label": "Headless Claude Agent SDK Runner",
-      "status": "planned",
+      "status": "shipped",
       "description": "Long-running Claude Agent SDK process that reads a build plan, executes checkpoints, calls append_decision.py at every decision point, surfaces escalations to HQ, stages commits without pushing.",
       "why": "Overnight runs require a runtime that survives without a chat session attached. The SDK is the substrate; this node makes it Brain-aware.",
       "depends_on": [
@@ -392,13 +398,33 @@
       "tags": [
         "runtime",
         "load-bearing"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-28T23:09:40.496030-07:00"
+      },
+      "files": [
+        {
+          "path": "005 Operations/Execution/runner.py",
+          "kind": "script",
+          "description": "Headless Claude Agent SDK runner. ClaudeSDKClient context-manager pattern (query() does not initialize SDK MCP servers correctly). One session per overnight build (TC1 lock). Six custom tools registered via in-process MCP server. AgentDefinition for parallel sub-agent spawn (TC2 lock). PreToolUse self-catch hook on Write/Edit. Build report writer with self-catch refusal."
+        },
+        {
+          "path": "005 Operations/Execution/brain_runtime_config.json",
+          "kind": "config",
+          "description": "Runtime config encoding all C1 verdicts. TC1 session lifecycle, TC2 spawn policy, TC3 trust-weight write split, TC4 cost cap with telemetry. max_thinking_tokens dropped per Opus 4.7 incompatibility... Opus 4.7 native adaptive thinking carries TC4 quality intent."
+        },
+        {
+          "path": "005 Operations/Execution/run_brain_overnight.sh",
+          "kind": "script",
+          "description": "Cron-friendly invocation wrapper. Pre-flight env checks, .env sourcing, exit codes for build complete vs guardrail vs pre-flight failure."
+        }
       ]
     },
     {
       "id": "p2.brain.corpus-query",
       "phase": "p2",
       "label": "Corpus Query at Decision Time",
-      "status": "planned",
+      "status": "shipped",
       "description": "Decision-time lookup against memory/feedback_*.md files plus prior decision-ledger entries. Returns relevant SOFT PREFERENCES and precedent decisions for the Brain to reason against.",
       "why": "Without precedent lookup, the Brain re-decides every call from scratch. With it, the Brain operates on accumulated judgment, which is the entire point of the corpus.",
       "depends_on": [
@@ -407,14 +433,24 @@
       "tags": [
         "runtime",
         "corpus"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-28T23:09:40.496030-07:00"
+      },
+      "files": [
+        {
+          "path": "005 Operations/Execution/corpus_query.py",
+          "kind": "script",
+          "description": "Decision-time corpus lookup. Eight actions: list / find / read / redirects / precedent / pending / trust / hq-pending. Reads memory/feedback_*.md, QWF.decisions.json, hq_brain_verdicts. Wrapped as @tool for SDK consumption. CLI dispatcher for diagnostics."
+        }
       ]
     },
     {
       "id": "p2.brain.surprise-pause",
       "phase": "p2",
       "label": "Surprise Pause + HQ Escalation",
-      "status": "planned",
-      "description": "When the Brain hits a NOVEL decision (not in corpus, not a HARD RULE), it pauses the run, files an HQ item with full context, and waits for TIG's verdict. No autonomous resolution of novel calls.",
+      "status": "shipped",
+      "description": "When the Brain hits a NOVEL decision (not in corpus, not a HARD RULE), it pauses the run, files an HQ item with full context, and waits for TIG's verdict. No autonomous resolution of novel calls. Refined during Phase 3 build: rather than literally pausing the run on NOVEL decisions, the runner logs them as pending verdicts (via append_decision dual-write) and continues. The reviewer verdicts asynchronously on the Brain page. Functionally equivalent to the original spec... no autonomous resolution of novel calls, every NOVEL gets a card, the corpus only grows via reviewer-blessed verdicts. Aligns with the Phase 2A escalation-contract refinement (chat-report+card pattern replaces blocking pause).",
       "why": "Cold-start treatment for novel decisions is the safety net. It prevents the Brain from inventing precedent and lets the corpus grow only via TIG-blessed entries.",
       "depends_on": [
         "p2.brain.headless-runner"
@@ -422,13 +458,16 @@
       "tags": [
         "safety",
         "human-in-the-loop"
-      ]
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-28T23:09:40.496030-07:00"
+      }
     },
     {
       "id": "p2.brain.commit-staging",
       "phase": "p2",
       "label": "Commit Staging (No Push)",
-      "status": "planned",
+      "status": "shipped",
       "description": "Brain stages commits but never pushes to main. TIG green-lights pushes during morning review. The zero-autonomous-commits gate from CLAUDE.md applies absolutely.",
       "why": "Reversibility is the safety property. A staged commit can be amended, squashed, or discarded; a pushed commit is public history. Gate stays even when trust meter is high.",
       "depends_on": [
@@ -437,6 +476,16 @@
       "tags": [
         "safety",
         "irreversibility-discipline"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-28T23:09:40.496030-07:00"
+      },
+      "files": [
+        {
+          "path": "005 Operations/Execution/runner.py",
+          "kind": "script",
+          "description": "System prompt forbids git commit / push. Sub-agents inherit the same gate. C4 rehearsal verified: 27 turns of agent execution staged file changes via Edit/Write but never invoked git commit or git push."
+        }
       ]
     },
     {
