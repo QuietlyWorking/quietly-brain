@@ -4,8 +4,8 @@
     "schemaVersion": 1,
     "mapVersion": "1.0.0",
     "createdAt": "2026-04-26",
-    "updatedAt": "2026-04-28",
-    "lastReviewedAt": "2026-04-28",
+    "updatedAt": "2026-04-30",
+    "lastReviewedAt": "2026-04-30",
     "owners": [
       "TIG"
     ],
@@ -41,6 +41,12 @@
         "change": "Phase 3 Brain MVP runtime shipped: p2.brain.headless-runner, p2.brain.corpus-query, p2.brain.surprise-pause, p2.brain.commit-staging all toggled planned -> shipped. Runner.py + corpus_query.py + brain_runtime_config.json + run_brain_overnight.sh built and verified via C4 rehearsal: 27-turn autonomous build executed against synthetic plan, $2.61 inside $8 cap, all wired tool paths fired, trust-weight dual-write split honored (NOVEL via append_decision, SOFT-PREFERENCE via write_brain_verdict), em-dash discipline held. Four self-catches surfaced honestly: query() vs ClaudeSDKClient for SDK MCP servers, max_thinking_tokens incompatible with Opus 4.7, agent build-report false-positive on self-catch (system prompt fix), top_calls schema mismatch in checkpoint formatter (formatter fix). Build map count: 10 of 27 -> 14 of 27 (52%).",
         "reason": "Phase 3 of the QWF Advisor Brain build plan complete. The runtime exists, exercises every wired tool, respects all C1 verdicts, and passes its own self-catch discipline. Phase 4 (mobile UX polish, trust meter sub-views) and Phase 5 (open standard publication) are the natural next sequences.",
         "author": "Phase 3 Brain MVP Runtime Build Session (Claude Opus 4.7) plus TIG verdicts"
+      },
+      {
+        "date": "2026-04-30",
+        "change": "p2.brain.first-overnight-run toggled planned -> shipped. First real overnight run executed against the Phase 4 ask-question-gesture design build plan. Runtime completed 5m 49s, 39 turns, $5.78 of $8 cap, four cards landed clean (2 NOVEL via append_decision dual-write + 2 SOFT-PREFERENCE via write_brain_verdict direct), zero self-catches, zero crash-loud events. All four cards approved-silent by TIG at 08:03-08:05 Pacific 2026-04-29 after the 8am morning digest surfaced them. Operational replacement loop ran end-to-end for the first time: Brain designed, TIG slept, morning digest surfaced, TIG verdicted, advisor session synced. Build map count: 14 of 27 -> 15 of 27 (56%).",
+        "reason": "First-light is the proof of MVP per the dev map's own description. The Brain ran autonomously, produced real architectural output (a 274-line Phase 4 design spec implementation-ready for D4.1-D4.5 sequencing), respected every C1 lock (TC1-TC4), and earned a clean approved-silent verdict on every card. Operational replacement of routine architectural calls is real, demonstrated, and durable across a sleep cycle.",
+        "author": "Phase 4 First-Light Run + TIG Morning Verdicts"
       }
     ]
   },
@@ -492,7 +498,7 @@
       "id": "p2.brain.first-overnight-run",
       "phase": "p2",
       "label": "First Successful Overnight Run",
-      "status": "planned",
+      "status": "shipped",
       "description": "Inaugural autonomous overnight run executes a real build plan (likely a future schema checkpoint), produces ledger entries, queues HQ escalations as needed, stages commits. Morning review verifies the run via the report format.",
       "why": "First-light is the proof of MVP. Without a successful overnight, every later phase is theoretical. With it, the Brain becomes load-bearing.",
       "depends_on": [
@@ -503,6 +509,26 @@
       "tags": [
         "milestone",
         "proof-of-life"
+      ],
+      "timestamps": {
+        "shipped_at": "2026-04-30T13:11:33.382907-07:00"
+      },
+      "files": [
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Phase 4 Build/01-ask-question-gesture-design.md",
+          "kind": "design-spec",
+          "description": "First-light overnight design output: 274-line Phase 4 polish spec for the ask-question gesture on HQ Brain page cards. Covers data model (4 nullable cols on hq_brain_verdicts), gesture (swipe-up), routing (existing realtime UPDATE channel), Lovable prompt 145 skeleton, advisor session integration, 9 edge cases, build sequence D4.1-D4.5, self-consistency check."
+        },
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Decision-Ledger/Phase-4-Build-Report-2026-04-28.md",
+          "kind": "capture",
+          "description": "First-light build report. 5m 49s, 39 turns, $5.78 (72% of $8 cap), 4 cards landed (2 NOVEL via append_decision dual-write + 2 SOFT-PREFERENCE via write_brain_verdict direct), zero self-catches, zero crashes. All 4 cards approved-silent by TIG at 08:03-08:05 Pacific 2026-04-29 after the 8am morning digest fired."
+        },
+        {
+          "path": ".tmp/runs/phase-4-aqg-2026-04-28.json",
+          "kind": "build-plan",
+          "description": "Phase 4 first-light build plan. Specifies the 4-checkpoint design exercise; gitignored as part of .tmp/."
+        }
       ]
     },
     {
