@@ -4,8 +4,8 @@
     "schemaVersion": 1,
     "mapVersion": "1.0.0",
     "createdAt": "2026-04-26",
-    "updatedAt": "2026-04-30",
-    "lastReviewedAt": "2026-04-30",
+    "updatedAt": "2026-05-04",
+    "lastReviewedAt": "2026-05-04",
     "owners": [
       "TIG"
     ],
@@ -47,6 +47,12 @@
         "change": "p2.brain.first-overnight-run toggled planned -> shipped. First real overnight run executed against the Phase 4 ask-question-gesture design build plan. Runtime completed 5m 49s, 39 turns, $5.78 of $8 cap, four cards landed clean (2 NOVEL via append_decision dual-write + 2 SOFT-PREFERENCE via write_brain_verdict direct), zero self-catches, zero crash-loud events. All four cards approved-silent by TIG at 08:03-08:05 Pacific 2026-04-29 after the 8am morning digest surfaced them. Operational replacement loop ran end-to-end for the first time: Brain designed, TIG slept, morning digest surfaced, TIG verdicted, advisor session synced. Build map count: 14 of 27 -> 15 of 27 (56%).",
         "reason": "First-light is the proof of MVP per the dev map's own description. The Brain ran autonomously, produced real architectural output (a 274-line Phase 4 design spec implementation-ready for D4.1-D4.5 sequencing), respected every C1 lock (TC1-TC4), and earned a clean approved-silent verdict on every card. Operational replacement of routine architectural calls is real, demonstrated, and durable across a sleep cycle.",
         "author": "Phase 4 First-Light Run + TIG Morning Verdicts"
+      },
+      {
+        "date": "2026-05-04",
+        "change": "Added p4.brain.sr-reinforcement-capture (status: planned). Captures corpus-grade APPROVED + REINFORCEMENT verdicts issued by Senior Reviewer agents during normal QWU work via two new hq_brain_verdicts fields (detection_rule + issued_by) plus Senior Reviewer prompt-template update plus last_reinforced touch on cited memory files plus Lovable prompt for issued_by filter chip on the HQ Brain page UI. Six long-term ideas captured in master capture doc Senior-Reviewer-Reinforcement-Capture.md with explicit pull-in triggers (promotion mechanic, lazy-version-rejected field, altitude tagging, per-agent-type trust meters, per-individual trust meters, the v1 detection-rule layer). Other ideas NOT yet promoted to dev-map nodes per discipline of keeping the public surface free of speculative items; each promotes when its pull-in trigger fires. Build map count: 27 -> 28 nodes (15 of 28 shipped, 54%).",
+        "reason": "Brainstorm session 2026-05-04 identified that Senior Reviewer agents operating from TIG's pre-loaded judgment were producing corpus-grade reinforcements that evaporated into chat history rather than entering the Brain corpus. Same shape as autonomous Brain runtime cards (TIG-aligned verdicts), different surface (daytime vs overnight). The detection_rule field (Layer 2 capture) is the highest-leverage long-term move... it teaches future Senior Reviewers what to look for, not just what to conclude. v1 scope locked; build session next.",
+        "author": "TIG + Claude (Opus 4.7) Senior Reviewer Reinforcement Capture brainstorm"
       }
     ]
   },
@@ -649,6 +655,41 @@
       "tags": [
         "security",
         "integrity"
+      ]
+    },
+    {
+      "id": "p4.brain.sr-reinforcement-capture",
+      "phase": "p4",
+      "label": "Senior Reviewer Reinforcement Capture (v1)",
+      "status": "planned",
+      "description": "Capture corpus-grade APPROVED + REINFORCEMENT verdicts issued by Senior Reviewer agents during normal QWU work, so the gold compounds in the Brain corpus rather than evaporating into chat history. v1 ships: two new fields on hq_brain_verdicts (detection_rule, issued_by); write_brain_verdict.py accepts them and touches last_reinforced on cited memory files as a free-win side effect; Senior Reviewer prompt-template instruction block; Lovable prompt adding an issued_by filter chip to the Brain page (alongside existing trust-weight chips) plus provenance surfacing in the card detail drawer. Threshold gate: only write a card when the reinforcement names a NEW pattern OR calibrates an existing pattern at a NEW altitude.",
+      "why": "Senior Reviewer agents operate from TIG's pre-loaded judgment with full session context, the same shape the autonomous Brain runtime takes overnight. Their APPROVED + REINFORCEMENT verdicts carry corpus-grade signal currently lost to chat. Without structural capture, every Senior Reviewer session leaks wisdom that should compound. The detection_rule field (Layer 2 capture) is the highest-leverage long-term move identified in the 2026-05-04 brainstorm... it teaches future Senior Reviewers what to look for, not just what to conclude.",
+      "depends_on": [
+        "p2.brain.headless-runner",
+        "p3.brain.verdict-mechanism"
+      ],
+      "files": [
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Senior-Reviewer-Reinforcement-Capture.md",
+          "kind": "capture",
+          "description": "Master capture document: locked decisions, v1 scope, six long-term ideas with explicit pull-in triggers, phased build plan, compass test."
+        },
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Decision-Ledger/Corpus-Seed-2026-04-25.md",
+          "kind": "capture",
+          "description": "Corpus seed entry Preference 17 (tig-preference-capture-agent-derived-reinforcements) appended 2026-05-04 with full Non-technical description, threshold rule, detection-rule mandate, compass alignment."
+        },
+        {
+          "path": "memory/feedback_senior_reviewer_multi_agent_pattern.md",
+          "kind": "memory",
+          "description": "Source pattern this track formalizes (script-then-fanout for high-stakes deadline deliverables)."
+        }
+      ],
+      "tags": [
+        "calibration",
+        "corpus-capture",
+        "multi-agent",
+        "long-term-leverage"
       ]
     },
     {
