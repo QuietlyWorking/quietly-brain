@@ -53,6 +53,12 @@
         "change": "Added p4.brain.sr-reinforcement-capture (status: planned). Captures corpus-grade APPROVED + REINFORCEMENT verdicts issued by Senior Reviewer agents during normal QWU work via two new hq_brain_verdicts fields (detection_rule + issued_by) plus Senior Reviewer prompt-template update plus last_reinforced touch on cited memory files plus Lovable prompt for issued_by filter chip on the HQ Brain page UI. Six long-term ideas captured in master capture doc Senior-Reviewer-Reinforcement-Capture.md with explicit pull-in triggers (promotion mechanic, lazy-version-rejected field, altitude tagging, per-agent-type trust meters, per-individual trust meters, the v1 detection-rule layer). Other ideas NOT yet promoted to dev-map nodes per discipline of keeping the public surface free of speculative items; each promotes when its pull-in trigger fires. Build map count: 27 -> 28 nodes (15 of 28 shipped, 54%).",
         "reason": "Brainstorm session 2026-05-04 identified that Senior Reviewer agents operating from TIG's pre-loaded judgment were producing corpus-grade reinforcements that evaporated into chat history rather than entering the Brain corpus. Same shape as autonomous Brain runtime cards (TIG-aligned verdicts), different surface (daytime vs overnight). The detection_rule field (Layer 2 capture) is the highest-leverage long-term move... it teaches future Senior Reviewers what to look for, not just what to conclude. v1 scope locked; build session next.",
         "author": "TIG + Claude (Opus 4.7) Senior Reviewer Reinforcement Capture brainstorm"
+      },
+      {
+        "date": "2026-05-04",
+        "change": "p4.brain.sr-reinforcement-capture toggled planned -> shipped. Build session executed Senior-Reviewer-with-2-track-fanout: orchestrator session authored locked decisions plus master capture plus corpus seed P17 plus dev-map planned-node, fanned out Track A (migration spec + helper v1.1.0 + SR prompt-template addition) to fresh session A and Track C (Lovable prompt 146) to fresh session C in parallel, independently verified each track before issuing APPROVED + REINFORCEMENT verdicts, sequenced unified commit pass after both returned approved (commit 6f9adc2ce, 5 files +1343/-16), applied migration 03 via Supabase Management API with 8 pre-flight + 8 post-apply validations all green (24 existing rows backfilled to issued_by='tig'; CHECK constraint enforced HTTP 400 on negative INSERT; idempotency re-run produced zero schema delta), TIG deployed and published Lovable prompt 146 in parallel, captured 7 inaugural Senior Reviewer cards on the live system covering surface-design + migration-discipline + verification-discipline + scope-discipline + ui-affordance-discipline + persistence-discipline + validation-discipline categories. Build map count: 15 of 28 -> 16 of 28 (57%). The Brain corpus is officially compounding from agent-derived reinforcements; the system that captures Senior Reviewer wisdom is itself built using Senior Reviewer wisdom.",
+        "reason": "v1 of the Senior Reviewer Reinforcement Capture track ships fully end-to-end on the same day the brainstorm scoped it. Migration applied + helper deployed + Lovable prompt published + 7 inaugural cards landed + side-effect path verified + dev-map flipped. The dogfood thesis (the system can capture corpus-grade reinforcements from its own build session) validated with 7 cards instead of the 6 planned (one orchestrator-surfaced reinforcement on validation-path pivots earned its place from the migration apply session itself). Phase 4 polish track gets one more shipped node; the Brain MVP runtime now has a daytime daily-cadence companion to its overnight cadence.",
+        "author": "TIG (decisions + verdicts) + Senior Reviewer orchestrator (Claude Opus 4.7) + Track A fresh session + Track C fresh session"
       }
     ]
   },
@@ -661,13 +667,16 @@
       "id": "p4.brain.sr-reinforcement-capture",
       "phase": "p4",
       "label": "Senior Reviewer Reinforcement Capture (v1)",
-      "status": "planned",
-      "description": "Capture corpus-grade APPROVED + REINFORCEMENT verdicts issued by Senior Reviewer agents during normal QWU work, so the gold compounds in the Brain corpus rather than evaporating into chat history. v1 ships: two new fields on hq_brain_verdicts (detection_rule, issued_by); write_brain_verdict.py accepts them and touches last_reinforced on cited memory files as a free-win side effect; Senior Reviewer prompt-template instruction block; Lovable prompt adding an issued_by filter chip to the Brain page (alongside existing trust-weight chips) plus provenance surfacing in the card detail drawer. Threshold gate: only write a card when the reinforcement names a NEW pattern OR calibrates an existing pattern at a NEW altitude.",
-      "why": "Senior Reviewer agents operate from TIG's pre-loaded judgment with full session context, the same shape the autonomous Brain runtime takes overnight. Their APPROVED + REINFORCEMENT verdicts carry corpus-grade signal currently lost to chat. Without structural capture, every Senior Reviewer session leaks wisdom that should compound. The detection_rule field (Layer 2 capture) is the highest-leverage long-term move identified in the 2026-05-04 brainstorm... it teaches future Senior Reviewers what to look for, not just what to conclude.",
+      "status": "shipped",
+      "description": "Capture corpus-grade APPROVED + REINFORCEMENT verdicts issued by Senior Reviewer agents during normal QWU work, so the gold compounds in the Brain corpus rather than evaporating into chat history. v1 shipped: two new fields on hq_brain_verdicts (detection_rule, issued_by) via migration 03; write_brain_verdict.py v1.1.0 accepts them and touches last_reinforced on cited memory files as a free-win side effect; Senior Reviewer prompt-template instruction block appended to feedback_senior_reviewer_multi_agent_pattern.md; Lovable prompt 146 added an issued_by filter chip to the Brain page alongside existing trust-weight chips plus provenance surfacing in the card detail drawer. Threshold gate: only write a card when the reinforcement names a NEW pattern OR calibrates an existing pattern at a NEW altitude. Seven inaugural Senior Reviewer cards landed on the live system 2026-05-04 covering surface-design, migration-discipline, verification-discipline, scope-discipline, ui-affordance-discipline, persistence-discipline, and validation-discipline categories.",
+      "why": "Senior Reviewer agents operate from TIG's pre-loaded judgment with full session context, the same shape the autonomous Brain runtime takes overnight. Their APPROVED + REINFORCEMENT verdicts carry corpus-grade signal previously lost to chat. The detection_rule field (Layer 2 capture) teaches future Senior Reviewers what to look for, not just what to conclude. Build itself dogfooded the system: the seven inaugural cards captured reinforcements that came from building the system itself, including one orchestrator-surfaced reinforcement on validation-path pivots when planned validations fail for orthogonal reasons.",
       "depends_on": [
         "p2.brain.headless-runner",
         "p3.brain.verdict-mechanism"
       ],
+      "timestamps": {
+        "shipped_at": "2026-05-04T22:30:00-07:00"
+      },
       "files": [
         {
           "path": "002 Projects/_QWF Advisor Brain/Senior-Reviewer-Reinforcement-Capture.md",
@@ -680,16 +689,43 @@
           "description": "Corpus seed entry Preference 17 (tig-preference-capture-agent-derived-reinforcements) appended 2026-05-04 with full Non-technical description, threshold rule, detection-rule mandate, compass alignment."
         },
         {
+          "path": "002 Projects/_QWF Advisor Brain/Phase 4 Build/03-supabase-migration-sr-reinforcement-fields.md",
+          "kind": "spec",
+          "description": "Migration spec adding detection_rule (TEXT, nullable) plus issued_by (TEXT, NOT NULL, default tig, CHECK enum) to hq_brain_verdicts. Applied via Supabase Management API 2026-05-04; 8 pre-flight checks plus 8 post-apply validations including negative CHECK enforcement and idempotency re-run all green."
+        },
+        {
+          "path": "005 Operations/Execution/write_brain_verdict.py",
+          "kind": "code",
+          "description": "Helper script v1.1.0: accepts detection_rule and issued_by fields; validates issued_by against the v1 enum; touches last_reinforced frontmatter on memory/*.md paths cited in cross_links.files_touched. Side-effect failures surface in data.last_reinforced_updates but never demote card-write success."
+        },
+        {
+          "path": "002 Projects/_HQ Command Center/Lovable Prompts/146-lovable-prompt-issued-by-filter-chip.md",
+          "kind": "lovable-prompt",
+          "description": "Lovable prompt 146: adds Issued By chip group to the Brain page filter row; surfaces issued_by provenance in the card detail drawer above the existing badges row. Pure additive (3 modified files, 0 new components). Deployed and published 2026-05-04."
+        },
+        {
           "path": "memory/feedback_senior_reviewer_multi_agent_pattern.md",
           "kind": "memory",
-          "description": "Source pattern this track formalizes (script-then-fanout for high-stakes deadline deliverables)."
+          "description": "Source pattern this track formalizes (script-then-fanout for high-stakes deadline deliverables). Gained a Corpus Capture (v1, 2026-05-04) section with the threshold rule, paste-ready CLI invocation, and chat-report short_id callout pattern."
+        },
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Brainstorm Prompts/SR-Capture-v1-Track-A-Kickoff.md",
+          "kind": "kickoff-prompt",
+          "description": "Self-contained kickoff prompt for Track A (migration spec plus helper update plus SR prompt-template addition)."
+        },
+        {
+          "path": "002 Projects/_QWF Advisor Brain/Brainstorm Prompts/SR-Capture-v1-Track-C-Kickoff.md",
+          "kind": "kickoff-prompt",
+          "description": "Self-contained kickoff prompt for Track C (Lovable prompt 146)."
         }
       ],
       "tags": [
         "calibration",
         "corpus-capture",
         "multi-agent",
-        "long-term-leverage"
+        "long-term-leverage",
+        "shipped",
+        "dogfood"
       ]
     },
     {
